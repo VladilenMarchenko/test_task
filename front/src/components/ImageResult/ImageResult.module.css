@@ -1,0 +1,31 @@
+
+.container {
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    background: #eaf4fb;
+}
+
+.download_link {
+    text-decoration: none;
+    background: #5ea3f5;
+    width: 100px;
+    color: white;
+    padding: 5px;
+    border: 2px #5ea3f5 solid;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-self: flex-end;
+}
+
+.score > span {
+    font-weight: 800;
+    margin-right: 12px;
+}
+
+.filename > span {
+    font-weight: 800;
+    margin-right: 12px;
+}

@@ -1,0 +1,22 @@
+.header{
+    background: #4358a9;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    height: 70px;
+    gap: 12px;
+    padding: 0 16px;
+}
+
+
+.header > a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 700;
+}
+
+.header > a:hover {
+    transition-duration: 300ms;
+    scale: 1.05;
+    color: #aba7a7;
+}
