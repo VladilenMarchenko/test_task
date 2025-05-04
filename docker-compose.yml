@@ -19,6 +19,11 @@ services:
       KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT
       KAFKA_CFG_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE: "true"
+    healthcheck:
+      test: [ "CMD", "kafka-topics.sh", "--bootstrap-server", "localhost:9092", "--list" ]
+      interval: 10s
+      timeout: 5s
+      retries: 15
     restart: always
 
   minio:
@@ -48,6 +53,12 @@ services:
         hard: -1
     volumes:
       - esdata:/usr/share/elasticsearch/data
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://localhost:9200 || exit 1" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
     ports:
       - "9200:9200"
     restart: unless-stopped
@@ -62,6 +73,11 @@ services:
       - "8000:8000"
     volumes:
       - ./logs:/app/logs
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
 
   react:
     build:
