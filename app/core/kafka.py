@@ -5,7 +5,6 @@ from core.config import settings
 
 
 async def consume():
-    print(settings.kafka.endpoint)
     consumer = AIOKafkaConsumer(
         'embedder',
         bootstrap_servers=settings.kafka.endpoint,
@@ -59,3 +58,6 @@ async def send_one(file_url: str, filename: str):
         await producer.send_and_wait("embedder", message_bytes)
     finally:
         await producer.stop()
+
+
+

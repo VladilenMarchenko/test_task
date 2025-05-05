@@ -11,6 +11,7 @@ from core.elastic import es_helper
 
 model = models.resnet50()
 model.eval()
+torch.set_num_threads(2)
 
 model = torch.nn.Sequential(*list(model.children())[:-1])
 

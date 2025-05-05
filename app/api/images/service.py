@@ -1,7 +1,5 @@
-import asyncio
 import io
 import mimetypes
-import os
 from zipfile import ZipFile
 
 import pillow_heif

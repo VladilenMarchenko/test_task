@@ -29,7 +29,7 @@ class ElasticHelper:
                 }
             })
 
-    async def search_similar_images(self, vector: list[float], k: int = 10):
+    async def search_similar_images(self, vector: list[float], k: int = 5):
         query = {
             "knn": {
                 "field": "vector",

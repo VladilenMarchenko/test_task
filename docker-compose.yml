@@ -71,6 +71,7 @@ services:
       - .env.docker
     ports:
       - "8000:8000"
+    mem_limit: 10g
     volumes:
       - ./logs:/app/logs
     depends_on:
@@ -78,6 +79,7 @@ services:
         condition: service_healthy
       kafka:
         condition: service_healthy
+    restart: always
 
   react:
     build:
