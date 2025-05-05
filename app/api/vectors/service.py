@@ -1,5 +1,6 @@
 from uuid import uuid4
 
+import numpy as np
 from fastapi import UploadFile, HTTPException
 from torchvision import models, transforms
 import torch
@@ -36,11 +37,14 @@ class VectorService:
             prepared_file = ImageService.read_image_from_bytes(image_bytes=file_bytes)
 
             input_tensor = preprocess(prepared_file).unsqueeze(0)
+
             with torch.no_grad():
-                vector = model(input_tensor).squeeze().tolist()
+                vector = model(input_tensor).squeeze().numpy()
+
+            normalized_vector = vector / np.linalg.norm(vector)
 
             return VectoredFile(
-                vector=vector,
+                vector=normalized_vector.tolist(),
                 filename=file.filename
             )
         except Exception as e:
@@ -53,13 +57,17 @@ class VectorService:
             prepared_file = ImageService.read_image_from_bytes(file_bytes)
 
             input_tensor = preprocess(prepared_file).unsqueeze(0)
+
             with torch.no_grad():
-                vector = model(input_tensor).squeeze().tolist()
+                vector = model(input_tensor).squeeze().numpy()
+
+            normalized_vector = vector / np.linalg.norm(vector)
 
             return VectoredFile(
-                vector=vector,
+                vector=normalized_vector.tolist(),
                 file_url=file_url
             )
+
         except Exception as e:
             raise HTTPException(status_code=500, detail=str(e))
 

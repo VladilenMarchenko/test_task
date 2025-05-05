@@ -23,7 +23,12 @@ class ElasticHelper:
                             "type": "dense_vector",
                             "dims": 2048,
                             "index": True,
-                            "similarity": "cosine"
+                            "similarity": "cosine",
+                            "index_options": {
+                                "type": "hnsw",
+                                "m": 32,
+                                "ef_construction": 200
+                            }
                         }
                     }
                 }
@@ -35,7 +40,7 @@ class ElasticHelper:
                 "field": "vector",
                 "query_vector": vector,
                 "k": k,
-                "num_candidates": 10*k
+                "num_candidates": 100 * k
             },
             "fields": [
                 "file_url", "original_filename"
